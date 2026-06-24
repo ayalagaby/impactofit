@@ -1,0 +1,21 @@
+{
+  "name": "ImpactoFit",
+  "short_name": "ImpactoFit",
+  "description": "Herramienta para crear hojas de entrenamiento con bloques de actividades.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0d1321",
+  "theme_color": "#4f6cf6",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

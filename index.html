@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ImpactoFit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <div class="brand">
+        <div class="logo">IF</div>
+        <div>
+          <h1>ImpactoFit</h1>
+          <p>Planificador de hojas de actividades para clase, turno, lección, disciplina, taller o módulo.</p>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section hero">
+        <p>Selecciona bloques de actividades y asigna tiempos para armar tus hojas de entrenamiento. Guarda cada hoja como una clase, turno, lección, disciplina, taller o módulo para acceder rápido.</p>
+      </section>
+
+      <section class="section layout">
+        <div class="panel panel-left">
+          <div class="panel-header">
+            <h2>Actividades disponibles</h2>
+            <label class="search-label">
+              Buscar:
+              <input id="searchInput" type="search" placeholder="ej. cardio" />
+            </label>
+          </div>
+
+          <div id="activityList" class="list"></div>
+
+          <div class="panel-inner-card">
+            <div class="panel-header">
+              <h2>Agregar actividad propia</h2>
+            </div>
+            <div class="card form-card">
+              <label>
+                Nombre
+                <input id="customTitle" type="text" placeholder="Ej. Caminata con peso" />
+              </label>
+              <label>
+                Categoría
+                <input id="customCategory" type="text" placeholder="Cardio, Fuerza, Core..." />
+              </label>
+              <label>
+                Duración
+                <input id="customDuration" type="text" placeholder="Ej. 10 min" />
+              </label>
+              <label>
+                Notas
+                <textarea id="customNotes" rows="3" placeholder="Detalles breves"></textarea>
+              </label>
+              <button id="addCustomActivityButton" class="primary"><span class="material-icons">add_circle</span>Agregar actividad</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel panel-right">
+          <div class="panel-header">
+            <h2>Hoja actual</h2>
+          </div>
+
+          <div class="sheet-summary">
+            <span id="sheetDuration">Duración total: 0 min</span>
+          </div>
+          <div class="sheet-stats">
+            <span id="sheetStats">Total de actividades: 0 · Categorías: 0</span>
+          </div>
+
+          <div id="currentSheet" class="sheet"></div>
+
+          <div class="sheet-actions">
+            <input id="sheetNameInput" type="text" placeholder="Nombre de la hoja / clase / módulo" />
+            <button id="saveSheetButton" class="primary"><span class="material-icons">save</span>Guardar hoja</button>
+            <button id="duplicateSheetButton" class="secondary"><span class="material-icons">content_copy</span>Duplicar hoja</button>
+            <button id="shareWhatsappButton" class="primary"><span class="button-icon whatsapp-icon" aria-hidden="true"></span>Compartir por WhatsApp</button>
+            <button id="clearSheetButton" class="secondary"><span class="material-icons">clear_all</span>Limpiar hoja</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section saved-section">
+        <div class="panel-header saved-header">
+          <h2>Hojas guardadas</h2>
+          <div class="saved-controls">
+            <label class="search-label">
+              Filtrar por categoría:
+              <select id="savedCategoryFilter">
+                <option value="all">Todas</option>
+              </select>
+            </label>
+            <label class="search-label">
+              Ordenar por:
+              <select id="savedSortOrder">
+                <option value="date_desc">Fecha (recientes)</option>
+                <option value="date_asc">Fecha (antiguas)</option>
+                <option value="duration_desc">Duración total (mayor)</option>
+                <option value="duration_asc">Duración total (menor)</option>
+              </select>
+            </label>
+            <div class="import-export-actions">
+              <button id="exportSheetsButton" class="secondary"><span class="material-icons">file_download</span>Exportar hojas</button>
+              <button id="importSheetsButton" class="secondary"><span class="material-icons">file_upload</span>Importar hojas</button>
+              <input id="importFileInput" type="file" accept=".json" hidden />
+            </div>
+          </div>
+        </div>
+        <div id="savedSheets" class="saved-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="editModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Editar actividad</h3>
+        <button id="closeModalButton" class="icon-button"><span class="material-icons">close</span></button>
+      </div>
+      <div class="modal-body">
+        <label>
+          Nombre
+          <input id="editTitle" type="text" />
+        </label>
+        <label>
+          Categoría
+          <input id="editCategory" type="text" />
+        </label>
+        <label>
+          Duración descriptiva
+          <input id="editDuration" type="text" />
+        </label>
+        <label>
+          Tiempo asignado
+          <select id="editPlannedTime">
+            <option value="5">5 min</option>
+            <option value="10">10 min</option>
+            <option value="15">15 min</option>
+            <option value="20">20 min</option>
+          </select>
+        </label>
+        <label>
+          Notas
+          <textarea id="editNotes" rows="4"></textarea>
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelEditButton" class="secondary"><span class="material-icons">cancel</span>Cancelar</button>
+        <button id="saveEditButton" class="primary"><span class="material-icons">save</span>Guardar</button>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-7AyOWbF5ixfCctpMoDv1CvCl49qcv+5S7wy5vCxIBi5elx52d1AiroZUeRhgqbwci2mwUvGCB7iQMoE19ZAprw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="app.js"></script>
+</body>
+</html>
