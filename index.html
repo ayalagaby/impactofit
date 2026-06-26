@@ -24,112 +24,208 @@
       </div>
     </header>
 
-    <main>
-      <section class="section hero">
-        <p>Selecciona bloques de actividades y asigna tiempos para armar tus hojas de entrenamiento. Guarda cada hoja como una clase, turno, lección, disciplina, taller o módulo para acceder rápido.</p>
+    <nav class="main-nav">
+      <button id="navProfile" class="nav-item active" data-module="profile" data-tooltip="Ver perfil de usuario">
+        <span class="material-icons">person</span>
+        <span>Perfil</span>
+      </button>
+      <button id="navNewSheet" class="nav-item" data-module="new-sheet" data-tooltip="Crear nueva hoja">
+        <span class="material-icons">note_add</span>
+        <span>Nueva Hoja</span>
+      </button>
+      <button id="navActivities" class="nav-item" data-module="activities" data-tooltip="Ver actividades">
+        <span class="material-icons">fitness_center</span>
+        <span>Actividades</span>
+      </button>
+      <button id="navCustomActivity" class="nav-item" data-module="custom-activity" data-tooltip="Agregar actividad propia">
+        <span class="material-icons">add_circle</span>
+        <span>Agregar Actividad</span>
+      </button>
+    </nav>
+
+    <main class="main-content">
+      <!-- MÓDULO: PERFIL -->
+      <section id="module-profile" class="module active">
+        <div class="section hero">
+          <p>Completa tu perfil para que aparezca en las hojas que compartas.</p>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Perfil de Usuario</h2>
+          </div>
+          <div class="card form-card profile-form">
+            <label>
+              Nombre Completo
+              <input id="profileFullName" type="text" placeholder="Tu nombre completo" />
+            </label>
+            <label>
+              Número de Móvil / WhatsApp
+              <input id="profileMobile" type="tel" placeholder="Ej. +54 9 123 456 7890" />
+            </label>
+            <label>
+              Página Web / Blog
+              <input id="profileWebsite" type="url" placeholder="Ej. https://miwebsite.com" />
+            </label>
+            <label>
+              Redes Sociales
+              <div class="social-inputs">
+                <input id="profileInstagram" type="text" placeholder="Instagram (sin @)" />
+                <input id="profileFacebook" type="text" placeholder="Facebook (página)" />
+                <input id="profileLinkedin" type="text" placeholder="LinkedIn (perfil)" />
+              </div>
+            </label>
+            <button id="saveProfileButton" class="primary" data-tooltip="Guardar perfil"><span class="material-icons">save</span>Guardar Perfil</button>
+          </div>
+
+          <div id="profilePreview" class="card hidden">
+            <div class="panel-header">
+              <h3>Vista Previa del Perfil</h3>
+            </div>
+            <div id="profilePreviewContent"></div>
+          </div>
+        </div>
       </section>
 
-      <section class="section layout">
-        <div class="panel panel-left">
+      <!-- MÓDULO: NUEVA HOJA -->
+      <section id="module-new-sheet" class="module hidden">
+
+      <!-- MÓDULO: NUEVA HOJA -->
+      <section id="module-new-sheet" class="module hidden">
+        <div class="section hero">
+          <p>Crea una nueva hoja de actividades. Selecciona bloques de actividades, asigna tiempos y guarda tu hoja.</p>
+        </div>
+
+        <div class="section layout">
+          <div class="panel panel-left">
+            <div class="panel-header">
+              <h2>Actividades disponibles</h2>
+              <label class="search-label">
+                Buscar:
+                <input id="searchInput" type="search" placeholder="ej. cardio" />
+              </label>
+            </div>
+            <div id="activityList" class="list"></div>
+          </div>
+
+          <div class="panel panel-right">
+            <div class="panel-header">
+              <h2>Hoja actual</h2>
+            </div>
+
+            <div class="sheet-summary">
+              <span id="sheetDuration">Duración total: 0 min</span>
+            </div>
+            <div class="sheet-stats">
+              <span id="sheetStats">Total de actividades: 0 · Categorías: 0</span>
+              <button id="clearSheetButton" class="button-link" data-tooltip="Borrar todas las actividades de esta hoja"><span class="material-icons">clear_all</span>Limpiar hoja</button>
+            </div>
+
+            <div id="currentSheet" class="sheet"></div>
+
+            <div class="sheet-actions">
+              <input id="sheetNameInput" type="text" placeholder="Nombre de la hoja / clase / módulo" />
+              <button id="saveSheetButton" class="primary" data-tooltip="Guardar la hoja actual"><span class="material-icons">save</span>Guardar hoja</button>
+              <button id="duplicateSheetButton" class="secondary" data-tooltip="Duplicar la hoja actual"><span class="material-icons">content_copy</span>Duplicar hoja</button>
+              <button id="shareWhatsappButton" class="primary" data-tooltip="Compartir por WhatsApp"><span class="button-icon whatsapp-icon" aria-hidden="true"></span>Compartir por WhatsApp</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MÓDULO: ACTIVIDADES -->
+      <section id="module-activities" class="module hidden">
+        <div class="section hero">
+          <p>Todas las actividades disponibles. Usa la búsqueda para filtrar por categoría, nombre o descripción.</p>
+        </div>
+
+        <div class="panel">
           <div class="panel-header">
             <h2>Actividades disponibles</h2>
             <label class="search-label">
               Buscar:
-              <input id="searchInput" type="search" placeholder="ej. cardio" />
+              <input id="searchInputActivities" type="search" placeholder="ej. cardio, fuerza..." />
             </label>
           </div>
-
-          <div id="activityList" class="list"></div>
-
-          <div class="panel-inner-card">
-            <div class="panel-header">
-              <h2>Agregar actividad propia</h2>
-            </div>
-            <div class="card form-card">
-              <label>
-                Nombre
-                <input id="customTitle" type="text" placeholder="Ej. Caminata con peso" />
-              </label>
-              <label>
-                Categoría
-                <input id="customCategory" type="text" placeholder="Cardio, Fuerza, Core..." />
-              </label>
-              <label>
-                Duración
-                <input id="customDuration" type="text" placeholder="Ej. 10 min" />
-              </label>
-              <label>
-                Notas
-                <textarea id="customNotes" rows="3" placeholder="Detalles breves"></textarea>
-              </label>
-              <button id="addCustomActivityButton" class="primary"><span class="material-icons">add_circle</span>Agregar actividad</button>
-            </div>
-          </div>
+          <div id="activityListFull" class="list"></div>
         </div>
 
-        <div class="panel panel-right">
+        <div class="panel">
           <div class="panel-header">
-            <h2>Hoja actual</h2>
+            <h2>Hojas guardadas</h2>
+            <div class="saved-controls">
+              <label class="search-label">
+                Filtrar por categoría:
+                <select id="savedCategoryFilter">
+                  <option value="all">Todas</option>
+                </select>
+              </label>
+              <label class="search-label">
+                Ordenar por:
+                <select id="savedSortOrder">
+                  <option value="date_desc">Fecha (recientes)</option>
+                  <option value="date_asc">Fecha (antiguas)</option>
+                  <option value="duration_desc">Duración total (mayor)</option>
+                  <option value="duration_asc">Duración total (menor)</option>
+                </select>
+              </label>
+              <div class="import-export-actions">
+                <button id="exportSheetsButton" class="secondary" data-tooltip="Exportar hojas guardadas a JSON"><span class="material-icons">file_download</span>Exportar hojas</button>
+                <button id="importSheetsButton" class="secondary" data-tooltip="Importar hojas desde JSON"><span class="material-icons">file_upload</span>Importar hojas</button>
+                <input id="importFileInput" type="file" accept=".json" hidden />
+              </div>
+            </div>
           </div>
-
-          <div class="sheet-summary">
-            <span id="sheetDuration">Duración total: 0 min</span>
-          </div>
-          <div class="sheet-stats">
-            <span id="sheetStats">Total de actividades: 0 · Categorías: 0</span>
-            <button id="clearSheetButton" class="button-link"><span class="material-icons">clear_all</span>Limpiar hoja</button>
-          </div>
-
-          <div id="currentSheet" class="sheet"></div>
-
-          <div class="sheet-actions">
-            <input id="sheetNameInput" type="text" placeholder="Nombre de la hoja / clase / módulo" />
-            <button id="saveSheetButton" class="primary"><span class="material-icons">save</span>Guardar hoja</button>
-            <button id="duplicateSheetButton" class="secondary"><span class="material-icons">content_copy</span>Duplicar hoja</button>
-            <button id="shareWhatsappButton" class="primary"><span class="button-icon whatsapp-icon" aria-hidden="true"></span>Compartir por WhatsApp</button>
-          </div>
+          <div id="savedSheets" class="saved-list"></div>
         </div>
       </section>
 
-      <section class="section saved-section">
-        <div class="panel-header saved-header">
-          <h2>Hojas guardadas</h2>
-          <div class="saved-controls">
-            <label class="search-label">
-              Filtrar por categoría:
-              <select id="savedCategoryFilter">
-                <option value="all">Todas</option>
-              </select>
+      <!-- MÓDULO: AGREGAR ACTIVIDAD PROPIA -->
+      <section id="module-custom-activity" class="module hidden">
+        <div class="section hero">
+          <p>Crea tus propias actividades personalizadas. Luego podrás agregarlas a cualquier hoja.</p>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Agregar actividad propia</h2>
+          </div>
+          <div class="card form-card">
+            <label>
+              Nombre
+              <input id="customTitle" type="text" placeholder="Ej. Caminata con peso" />
             </label>
-            <label class="search-label">
-              Ordenar por:
-              <select id="savedSortOrder">
-                <option value="date_desc">Fecha (recientes)</option>
-                <option value="date_asc">Fecha (antiguas)</option>
-                <option value="duration_desc">Duración total (mayor)</option>
-                <option value="duration_asc">Duración total (menor)</option>
-              </select>
+            <label>
+              Categoría
+              <input id="customCategory" type="text" placeholder="Cardio, Fuerza, Core..." />
             </label>
-            <div class="import-export-actions">
-              <button id="exportSheetsButton" class="secondary"><span class="material-icons">file_download</span>Exportar hojas</button>
-              <button id="importSheetsButton" class="secondary"><span class="material-icons">file_upload</span>Importar hojas</button>
-              <input id="importFileInput" type="file" accept=".json" hidden />
+            <label>
+              Duración
+              <input id="customDuration" type="text" placeholder="Ej. 10 min" />
+            </label>
+            <label>
+              Notas
+              <textarea id="customNotes" rows="3" placeholder="Detalles breves"></textarea>
+            </label>
+            <button id="addCustomActivityButton" class="primary" data-tooltip="Agregar actividad personalizada"><span class="material-icons">add_circle</span>Agregar actividad</button>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Actividades personalizadas creadas</h2>
             </div>
+            <div id="customActivitiesList" class="list"></div>
           </div>
         </div>
-        <div id="savedSheets" class="saved-list"></div>
       </section>
     </main>
   </div>
-  <button id="newSheetButton" class="fab" aria-label="Hoja nueva" title="Hoja nueva" type="button" onclick="startNewSheet()">
-    <span class="material-icons">add</span>
-  </button>
 
   <div id="editModal" class="modal hidden">
     <div class="modal-content">
       <div class="modal-header">
         <h3>Editar actividad</h3>
-        <button id="closeModalButton" class="icon-button"><span class="material-icons">close</span></button>
+        <button id="closeModalButton" class="icon-button" data-tooltip="Cerrar editor"><span class="material-icons">close</span></button>
       </div>
       <div class="modal-body">
         <label>
@@ -159,11 +255,12 @@
         </label>
       </div>
       <div class="modal-footer">
-        <button id="cancelEditButton" class="secondary"><span class="material-icons">cancel</span>Cancelar</button>
-        <button id="saveEditButton" class="primary"><span class="material-icons">save</span>Guardar</button>
+        <button id="cancelEditButton" class="secondary" data-tooltip="Cancelar edición"><span class="material-icons">cancel</span>Cancelar</button>
+        <button id="saveEditButton" class="primary" data-tooltip="Guardar cambios"><span class="material-icons">save</span>Guardar</button>
       </div>
     </div>
   </div>
+
   <footer class="app-footer"><span id="footerYear"></span> by <a href="https://www.instagram.com/ayalagaby/" target="_blank" rel="noopener noreferrer">@ayalagaby</a></footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-7AyOWbF5ixfCctpMoDv1CvCl49qcv+5S7wy5vCxIBi5elx52d1AiroZUeRhgqbwci2mwUvGCB7iQMoE19ZAprw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="app.js"></script>
