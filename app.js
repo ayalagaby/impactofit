@@ -37,6 +37,7 @@ const sheetNameInput = document.getElementById("sheetNameInput");
 const saveSheetButton = document.getElementById("saveSheetButton");
 const duplicateSheetButton = document.getElementById("duplicateSheetButton");
 const shareWhatsappButton = document.getElementById("shareWhatsappButton");
+const newSheetButton = document.getElementById("newSheetButton");
 const clearSheetButton = document.getElementById("clearSheetButton");
 const customTitleInput = document.getElementById("customTitle");
 const customCategoryInput = document.getElementById("customCategory");
@@ -86,6 +87,7 @@ sheetNameInput.addEventListener("input", () => {
 
 duplicateSheetButton.addEventListener("click", duplicateCurrentSheet);
 shareWhatsappButton.addEventListener("click", shareSheetByWhatsapp);
+newSheetButton.addEventListener("click", startNewSheet);
 
 addCustomActivityButton.addEventListener("click", () => {
   addCustomActivity();
@@ -240,6 +242,7 @@ function updateSheetStats() {
   const totalActivities = state.currentSheet.length;
   const categories = Array.from(new Set(state.currentSheet.map((activity) => activity.category || "General")));
   sheetStatsLabel.textContent = `Total de actividades: ${totalActivities} · Categorías: ${categories.length}`;
+  clearSheetButton.style.display = totalActivities ? "inline-flex" : "none";
 }
 
 function renderSavedSheets() {
@@ -500,6 +503,17 @@ function saveCurrentSheetIfLoaded() {
   renderSavedSheets();
 }
 
+function startNewSheet() {
+  if (state.currentSheet.length || sheetNameInput.value || state.editingSheetIndex !== null) {
+    const proceed = confirm("¿Deseas comenzar una nueva hoja en blanco? La hoja actual se reiniciará.");
+    if (!proceed) return;
+  }
+  state.currentSheet = [];
+  state.editingSheetIndex = null;
+  sheetNameInput.value = "";
+  renderCurrentSheet();
+}
+
 function getSheetDuration(sheet) {
   return sheet.activities.reduce((sum, activity) => sum + (Number(activity.plannedTime) || 0), 0);
 }
@@ -602,7 +616,15 @@ function registerServiceWorker() {
   }
 }
 
+function updateFooterYear() {
+  const yearElement = document.getElementById("footerYear");
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+  }
+}
+
 renderActivityList();
 renderCurrentSheet();
 renderSavedSheets();
 registerServiceWorker();
+updateFooterYear();

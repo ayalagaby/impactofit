@@ -1,11 +1,11 @@
 :root {
-  --bg: #0d1321;
-  --surface: #17233b;
-  --surface2: #243757;
+  --bg: #000000;
+  --surface: #111111;
+  --surface2: #161616;
   --text: #f8f9ff;
   --muted: #c8d0ff;
-  --primary: #6d8cff;
-  --primary-strong: #4f6cf6;
+  --primary: #a6ff00;
+  --primary-strong: #8cff00;
   --danger: #f25c6a;
   --success: #4cd0a5;
   --border: rgba(255, 255, 255, 0.08);
@@ -19,8 +19,8 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: radial-gradient(circle at top, rgba(109, 140, 255, 0.18), transparent 28%),
-    linear-gradient(180deg, #0d1321 0%, #090e18 100%);
+  background: radial-gradient(circle at top, rgba(166, 255, 0, 0.08), transparent 25%),
+    linear-gradient(180deg, #000000 0%, #050505 100%);
   color: var(--text);
 }
 
@@ -58,12 +58,20 @@ header {
 .logo {
   width: 52px;
   height: 52px;
+  min-width: 52px;
   display: grid;
   place-items: center;
   border-radius: 18px;
   background: linear-gradient(135deg, #6d8cff, #4f6cf6);
-  font-weight: 800;
-  color: white;
+  overflow: hidden;
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 header h1 {
@@ -201,6 +209,51 @@ button {
   gap: 8px;
 }
 
+.fab {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6d8cff, #4f6cf6);
+  color: white;
+  border: none;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 20px 40px rgba(44, 67, 133, 0.32);
+  cursor: pointer;
+  z-index: 120;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 26px 48px rgba(44, 67, 133, 0.36);
+}
+
+.fab::after {
+  content: attr(title);
+  position: absolute;
+  right: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  background: rgba(0, 0, 0, 0.72);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.fab:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
 button:hover {
   transform: translateY(-1px) scale(1.01);
 }
@@ -222,29 +275,47 @@ button.danger:hover {
 .whatsapp-icon {
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%23ffffff' d='M380.9 97.1C339 55.2 286.1 32 229.8 32 132.3 32 48.2 110.7 33.2 204.8c-2.9 18.1 1.9 36.5 12.9 51.2L32 480l226.5-13.4c14.6 0 28.9-3.1 41.8-9 96.7-42.4 158.7-144.8 158.7-259.2 0-54-20.9-104.4-58.1-142.9zM229.8 439.6l-1.6.1-1.2-.6c-47.5-25.1-87.5-59.3-117.1-102.9l-69.7 20.4 18.7-67.4c-11.5-20.3-17.6-43.7-17.6-68.2 0-84.8 72.2-154.3 161-154.3 42.9 0 83.4 16.6 113.9 46.8 30.5 30.2 47.8 70.4 47.8 113.2 0 84.8-72.2 154.3-161 154.3-25.5 0-51-6.5-73.6-18.8l-44.1 13.4c-4.2 1.2-7.9 4.5-9.3 8.8l-12.1 43.4c-1.7 6.2.2 12.8 4.9 17.1 47.3 42.6 104.9 64.2 165.9 64.2 26.5 0 51.7-3.6 76.1-10.8 18.1-5.2 32.4-21.5 34.2-39.9l5.1-40.8c1.1-8.8-2.4-17.4-9.4-23.6-6.9-6.1-16.5-8.4-25.4-6.1l-45.6 12.8z'/%3E%3C/svg%3E") no-repeat center / contain;
 }
-+
 
 button.primary,
 button.danger {
   color: white;
 }
-+
 
 button.secondary {
   color: #f8f9ff;
 }
-+
 
 button.primary:hover {
   background: linear-gradient(135deg, #819bff, #6792f8);
 }
-+
+
 button.secondary:hover {
   background: rgba(255, 255, 255, 0.16);
 }
-+
+
 button.danger:hover {
   background: rgba(242, 92, 106, 0.25);
+}
+
+.button-link {
+  margin-top: 10px;
+  border: none;
+  background: transparent;
+  color: rgba(248, 249, 255, 0.75);
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0;
+  cursor: pointer;
+}
+
+.button-link .material-icons {
+  font-size: 16px;
+}
+
+.button-link:hover {
+  color: white;
 }
 
 .material-icons {
@@ -384,12 +455,12 @@ select {
 }
 
 button.primary {
-  background: linear-gradient(135deg, #6d8cff, #4f6cf6);
-  color: white;
+  background: linear-gradient(135deg, #b7ff2f, #8cff00);
+  color: #0d1410;
 }
 
 button.secondary {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(166, 255, 0, 0.12);
   color: var(--text);
 }
 
@@ -397,6 +468,15 @@ button.danger {
   background: rgba(242, 92, 106, 0.16);
   color: #f25c6a;
 }
+
+button.primary:hover {
+  background: linear-gradient(135deg, #d5ff5f, #a6ff00);
+}
+
+button.secondary:hover {
+  background: rgba(166, 255, 0, 0.2);
+}
+
 
 .badge {
   padding: 4px 10px;
@@ -497,4 +577,13 @@ button.danger {
   .modal-content {
     padding: 18px;
   }
+}
+
+.app-footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 20px auto 10px;
+  max-width: 1200px;
+  padding: 0 16px;
 }
